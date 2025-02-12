@@ -1,7 +1,12 @@
+import { useContext } from "react";
+import { ApiContext } from "../App";
+
 function ListingPage() {
+  const [apiData] = useContext(ApiContext);
+  console.log(apiData);
   return (
     <div>
-      <p>ListingPage</p>
+      <p>Listing</p>
     </div>
   );
 }
