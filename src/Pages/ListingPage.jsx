@@ -1,12 +1,19 @@
 import { useContext } from "react";
-import { ApiContext } from "../App";
+import { ApiContext, DataContext } from "../App";
 
 function ListingPage() {
   const [apiData] = useContext(ApiContext);
-  console.log(apiData);
+  const [loading, error] = useContext(DataContext);
   return (
     <div>
-      <p>Listing</p>
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && apiData && (
+        <>
+          <h2>Books</h2>
+          <div>{apiData.map((book, id))}</div>
+        </>
+      )}
     </div>
   );
 }

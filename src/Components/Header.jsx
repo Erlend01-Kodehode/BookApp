@@ -1,28 +1,81 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ApiContext } from "../App";
-import { apiGeneral } from "../Data/api";
+import { ApiContext, FetchContext } from "../App";
+import {
+  apiGeneral,
+  modifier,
+  topicAdventure,
+  topicFantasy,
+  topicFiction,
+  topicJustice,
+  topicMorality,
+  topicMystery,
+  topicPhilosophy,
+  topicPower,
+  topicRomance,
+  topicSociety,
+  topicThriller,
+  topicTragedy,
+  topicWar,
+} from "../Data/api";
 
 function Header() {
-  const [apiFetch, setApiFetch] = useContext(ApiContext);
+  const [apiFetch, setApiFetch] = useContext(FetchContext);
   const [apiData] = useContext(ApiContext);
 
-  function handleDataUpdate() {
-    setApiFetch(apiGeneral);
+  function handleDataUpdate(target) {
+    setApiFetch(`${apiGeneral}${modifier}${target}`);
   }
 
   useEffect(() => {
-    console.log(apiFetch);
     console.log(apiData);
-  }, [apiFetch, apiData]);
+  }, [apiData]);
 
   return (
     <div>
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/Listing" onClick={handleDataUpdate}>
-          Listing
-        </Link>
+        <nav>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicFiction)}>
+            Fiction
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicMystery)}>
+            Mystery
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicThriller)}>
+            Thriller
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicRomance)}>
+            Romance
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicFantasy)}>
+            Fantasy
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicMorality)}>
+            Morality
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicSociety)}>
+            Society
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicPower)}>
+            Power
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicJustice)}>
+            Justice
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicAdventure)}>
+            Adventure
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicTragedy)}>
+            Tragedy
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicWar)}>
+            War
+          </Link>
+          <Link to="/Listing" onClick={() => handleDataUpdate(topicPhilosophy)}>
+            Philosophy
+          </Link>
+        </nav>
         <Link to="/Favourites">Favourites</Link>
       </nav>
     </div>

@@ -2,9 +2,10 @@ import { Outlet } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
-import { apiGeneral } from "./Data/api";
 
+export const FetchContext = createContext();
 export const ApiContext = createContext();
+export const DataContext = createContext();
 
 function App() {
   const [apiFetch, setApiFetch] = useState(null);
@@ -40,13 +41,15 @@ function App() {
 
   return (
     <>
-      <ApiContext.Provider
-        value={([apiFetch, setApiFetch], [apiData, setApiData])}
-      >
-        <Header />
-        <Outlet />
-        <Footer />
-      </ApiContext.Provider>
+      <FetchContext.Provider value={[apiFetch, setApiFetch]}>
+        <ApiContext.Provider value={[apiData, setApiData]}>
+          <DataContext.Provider value={[loading, setLoading, error, setError]}>
+            <Header />
+            <Outlet />
+            <Footer />
+          </DataContext.Provider>
+        </ApiContext.Provider>
+      </FetchContext.Provider>
     </>
   );
 }
