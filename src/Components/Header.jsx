@@ -27,9 +27,9 @@ function Header() {
     setApiFetch(`${apiGeneral}${modifier}${target}`);
   }
 
-  useEffect(() => {
-    console.log(apiData);
-  }, [apiData]);
+  // useEffect(() => {
+  //   console.log(apiData);
+  // }, [apiData]);
 
   return (
     <div>
@@ -78,6 +78,10 @@ function Header() {
         </nav>
         <Link to="/Favourites">Favourites</Link>
       </nav>
+      <form>
+        <input type="text" name="search" placeholder="Search" />
+        <button type="submit">Search</button>
+      </form>
     </div>
   );
 }

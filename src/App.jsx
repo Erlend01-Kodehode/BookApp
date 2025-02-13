@@ -9,15 +9,22 @@ export const DataContext = createContext();
 
 function App() {
   const [apiFetch, setApiFetch] = useState(null);
-  const [apiData, setApiData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [apiData, setApiData] = useState(() => {
+    const savedData = localStorage.getItem("ApiMemory");
+    if (savedData) {
+      setLoading(false);
+      setError(false);
+    }
+    return savedData ? JSON.parse(savedData) : null;
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError(null);
       if (apiFetch != null) {
+        setLoading(true);
+        setError(null);
         try {
           const response = await fetch(apiFetch);
           if (!response.ok) {
@@ -25,6 +32,7 @@ function App() {
           }
           const result = await response.json();
           setApiData(result);
+          setError(false);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -36,8 +44,15 @@ function App() {
   }, [apiFetch]);
 
   useEffect(() => {
-    console.log(apiData);
+    // console.log(apiData.results);
+    localStorage.setItem("ApiMemory", JSON.stringify(apiData));
   }, [apiData]);
+
+  useEffect(() => {
+    console.log("Loading:", loading);
+    console.log("Error:", error);
+    console.log("Api", apiData.results);
+  }, [loading, error, apiData]);
 
   return (
     <>
